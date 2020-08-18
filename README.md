@@ -1,0 +1,2 @@
+# vueMini
+Vue object simulation
