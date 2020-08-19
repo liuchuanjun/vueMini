@@ -34,7 +34,7 @@ class Observer{
 
             get(){
                 
-                dep.target && dep.addSub(dep.target)
+                Dep.target && dep.addSub(Dep.target)
                 return val
             },
             set(newValue){

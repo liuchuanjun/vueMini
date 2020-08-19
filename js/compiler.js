@@ -57,19 +57,34 @@ class Compiler{
 
         let upDataFn = this[attrName + 'Updata']
 
-        upDataFn(node,this.vm[key])
+        upDataFn.call(this,node,this.vm[key],key)
     }
 
     // 处理v-text
-    textUpdata(node,value){
+    textUpdata(node,value,key){
 
         node.textContent = value
+
+        new Watcher(this.vm, key, (newValue)=>{
+
+            node.textContent = newValue
+        })
     }
 
     // 处理v-modle
-    modleUpdata(node,value){
+    modleUpdata(node,value,key){
 
         node.value = value
+
+        new Watcher(this.vm, key, (newValue)=>{
+
+            node.value = newValue
+        })
+
+        node.addEventListener('input',()=>{
+
+            this.vm[key] = node.value
+        })
     }
 
     // 编译文本节点，处理差值表达式
@@ -81,6 +96,11 @@ class Compiler{
             let key = RegExp.$1.trim()
 
             node.textContent = value.replace(reg, this.vm[key])
+
+            new Watcher(this.vm, key, (newValue)=>{
+
+                node.textContent = newValue
+            })
         }
     }
 

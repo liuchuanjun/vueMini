@@ -15,7 +15,7 @@ class Watcher{
         Dep.target = null
     }
 
-    upData(){
+    update(){
 
         let newValue = this.vm[this.key]
 
